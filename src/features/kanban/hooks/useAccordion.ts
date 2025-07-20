@@ -1,14 +1,17 @@
 // hooks/useAccordion.ts
 import { useState } from 'react';
-import { projectList, sidebarList } from '../constants/kanban';
+import {
+  projectSelectionList,
+  sidebarSelectionList,
+} from '../constants/kanban';
 
 const createInitialAccordionMap = (): Record<string, boolean> => {
   const initSidebar = Object.fromEntries(
-    sidebarList.map((item) => [`sidebar-${item}`, true])
+    sidebarSelectionList.map((item) => [`sidebar-${item}`, true])
   );
 
   const initKanban = Object.fromEntries(
-    projectList
+    projectSelectionList
       .filter((item) => item !== 'All')
       .map((item) => [`kanban-${item}`, true])
   );
