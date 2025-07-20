@@ -1,5 +1,7 @@
 // components/Sidebar/TeamFilter.tsx
-import { E_Team } from '../../constants/kanban';
+import { Checkbox } from '@/shared/components/ui/checkbox';
+import { teamSelectionList } from '../../constants/kanban';
+import { cn } from '@/shared/lib/utils/cn';
 
 interface TeamFilterProps {
   selectedTeams: string[];
@@ -14,8 +16,6 @@ export function TeamFilter({
   onToggle,
   onAccordionToggle,
 }: TeamFilterProps) {
-  const teamList = Object.values(E_Team);
-  console.log(teamList);
   return (
     <div className="border-t border-[#dbdbdb] py-[20px]">
       <div className="flex items-center justify-between">
@@ -25,16 +25,19 @@ export function TeamFilter({
         </button>
       </div>
 
-      <ul className={`overflow-hidden pt-[10px] ${isOpen ? 'h-full' : 'h-0'}`}>
-        {teamList.map((team) => (
+      <ul
+        className={cn('overflow-hidden pt-[10px]', isOpen ? 'h-full' : 'h-0')}
+      >
+        {teamSelectionList.map((team) => (
           <li key={`${team}_team`} className="px-[8px] py-[6px]">
-            <label className="flex items-center gap-[8px]">
-              <input
-                type="checkbox"
-                className="h-[18px] w-[18px] rounded-[4px]"
-                checked={selectedTeams.includes(team)}
-                onChange={() => onToggle(team)}
-              />
+            <label
+              className="flex cursor-pointer items-center gap-[8px]"
+              onClick={(e) => {
+                e.preventDefault();
+                onToggle(team);
+              }}
+            >
+              <Checkbox className="" checked={selectedTeams.includes(team)} />
               {team}
             </label>
           </li>

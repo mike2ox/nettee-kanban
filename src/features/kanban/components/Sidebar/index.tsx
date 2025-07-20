@@ -6,9 +6,9 @@ import { TeamFilter } from './TeamFilter';
 
 interface SidebarProps {
   filters: {
-    selectedProject: string[];
-    selectedTeam: string[];
-    selectedAssignee: string[];
+    selectedProjects: string[];
+    selectedTeams: string[];
+    selectedAssignees: string[];
   };
   accordionMap: Record<string, boolean>;
   onProjectToggle: (project: string) => void;
@@ -51,22 +51,22 @@ export function Sidebar({
 
       {/* 필터 섹션들 */}
       <ProjectFilter
-        selectedProjects={filters.selectedProject}
+        selectedProjects={filters.selectedProjects}
         isOpen={accordionMap['sidebar-project']}
         onToggle={onProjectToggle}
         onAccordionToggle={() => onAccordionToggle('sidebar-project')}
       />
 
       <TeamFilter
-        selectedTeams={filters.selectedTeam}
+        selectedTeams={filters.selectedTeams}
         isOpen={accordionMap['sidebar-team']}
         onToggle={onTeamToggle}
         onAccordionToggle={() => onAccordionToggle('sidebar-team')}
       />
 
       <AssigneeFilter
-        selectedTeams={filters.selectedTeam}
-        selectedAssignees={filters.selectedAssignee}
+        selectedTeams={filters.selectedTeams}
+        selectedAssignees={filters.selectedAssignees}
         isOpen={accordionMap['sidebar-assignee']}
         onTeamToggle={onTeamToggle}
         onAccordionToggle={() => onAccordionToggle('sidebar-assignee')}

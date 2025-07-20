@@ -1,29 +1,30 @@
 // hooks/useFilters.ts
 import { useState } from 'react';
+import { projectSelectionList, teamSelectionList } from '../constants/kanban';
 
 interface FilterState {
-  selectedProject: string[];
-  selectedTeam: string[];
-  selectedAssignee: string[];
+  selectedProjects: string[];
+  selectedTeams: string[];
+  selectedAssignees: string[];
 }
 
 export const useFilters = () => {
   const [filters, setFilters] = useState<FilterState>({
-    selectedProject: [],
-    selectedTeam: [],
-    selectedAssignee: [],
+    selectedProjects: [],
+    selectedTeams: [],
+    selectedAssignees: [],
   });
 
   const updateProjectFilter = (projects: string[]) => {
-    setFilters((prev) => ({ ...prev, selectedProject: projects }));
+    setFilters((prev) => ({ ...prev, selectedProjects: projects }));
   };
 
   const updateTeamFilter = (teams: string[]) => {
-    setFilters((prev) => ({ ...prev, selectedTeam: teams }));
+    setFilters((prev) => ({ ...prev, selectedTeams: teams }));
   };
 
   const updateAssigneeFilter = (assignees: string[]) => {
-    setFilters((prev) => ({ ...prev, selectedAssignee: assignees }));
+    setFilters((prev) => ({ ...prev, selectedAssignees: assignees }));
   };
 
   const handleProjectToggle = (proj: string) => {
@@ -33,16 +34,24 @@ export const useFilters = () => {
     }
 
     setFilters((prev) => {
-      const current = prev.selectedProject;
-      const activeProject = current.includes(proj)
+      const current = prev.selectedProjects;
+      const activeProjects = current.includes(proj)
         ? current.filter((p) => p !== proj)
         : [...current.filter((p) => p !== 'All'), proj];
 
-      const newProjects = activeProject.length === 0 ? ['All'] : activeProject;
+      let selectedProjects;
+      if (
+        activeProjects.length === 0 ||
+        activeProjects.length === projectSelectionList.length - 1
+      ) {
+        selectedProjects = ['All'];
+      } else {
+        selectedProjects = activeProjects;
+      }
 
       return {
         ...prev,
-        selectedProject: newProjects,
+        selectedProjects: selectedProjects,
       };
     });
   };
@@ -54,25 +63,33 @@ export const useFilters = () => {
     }
 
     setFilters((prev) => {
-      const current = prev.selectedTeam;
-      const activeTeam = current.includes(team)
+      const current = prev.selectedTeams;
+      const activeTeams = current.includes(team)
         ? current.filter((t) => t !== team)
         : [...current.filter((t) => t !== 'All'), team];
 
-      const newTeams = activeTeam.length === 0 ? ['All'] : activeTeam;
+      let selectedTeams;
+      if (
+        activeTeams.length === 0 ||
+        activeTeams.length === teamSelectionList.length - 1
+      ) {
+        selectedTeams = ['All'];
+      } else {
+        selectedTeams = activeTeams;
+      }
 
       return {
         ...prev,
-        selectedTeam: newTeams,
+        selectedTeams: selectedTeams,
       };
     });
   };
 
   const resetFilters = () => {
     setFilters({
-      selectedProject: [],
-      selectedTeam: [],
-      selectedAssignee: [],
+      selectedProjects: [],
+      selectedTeams: [],
+      selectedAssignees: [],
     });
   };
 
