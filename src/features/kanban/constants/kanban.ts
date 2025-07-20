@@ -6,8 +6,15 @@ export enum E_Team {
   be = 'BE',
   ux = 'UX/UI',
 }
-export const sidebarList = ['project', 'team', 'assignee', 'label', 'more'];
-export const projectList = ['All', 'Blolet', 'Kanban', 'onBoard'];
+export const sidebarSelectionList = [
+  'project',
+  'team',
+  'assignee',
+  'label',
+  'more',
+];
+export const teamSelectionList = Object.values(E_Team);
+export const projectSelectionList = ['All', 'Blolet', 'Kanban', 'onBoard'];
 
 export const kanbanStyleMap = {
   TODO: {
